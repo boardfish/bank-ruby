@@ -2,20 +2,38 @@
 
 <h1>Transactions</h1>
 
-<table>
+<p><%= @balance %></p>
+
+<table class="table">
   <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
+    
+      <tr>
+        <th>Date</th>
+        <th colspan="2">Merchant</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+
   </thead>
 
   <tbody>
     <% @transactions.each do |transaction| %>
-      <tr>
+      <tr style="height: 50px;">
         <td><%= transaction.created.to_formatted_s(:db) %></td>
         <td><img style="max-width: 50px;" src="<%= transaction&.merchant&.logo %>"></img></td>
         <td><%= transaction.name %></td>
         <td><%= number_to_currency(transaction.amount, unit: '£') %></td>
+        <td><%= transaction.category %></td>
+        <% if transaction.category_id.nil? %>
+          <td>
+            <select>
+              <option>Food/Groceries</option>
+              <option>Accommodation</option>
+              <option>Example</option>
+            </select>
+          </td>
+        <% end %>
         <td><%= link_to 'Show', transaction %></td>
       </tr>
     <% end %>

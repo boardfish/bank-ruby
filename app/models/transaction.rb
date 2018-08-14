@@ -14,4 +14,12 @@ class Transaction < ApplicationRecord
   def merchant
     Merchant.find(merchant_id) unless merchant_id.nil?
   end
+
+  def category
+    if !category_id.nil?
+      Category.find(category_id).name
+    else
+      monzo_category
+    end
+  end
 end

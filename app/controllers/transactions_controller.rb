@@ -3,8 +3,12 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
+  STARTING_BALANCE = 304.15
+
   def index
-    @transactions = Transaction.all.reverse
+    @transactions = Transaction.all.group_by { |t| t.created.beginning_of_month }
+    @transactions = @transactions[@transactions.keys.last].reverse
+    @balance = Transaction.sum(:amount) + STARTING_BALANCE
   end
 
   # GET /transactions/1
