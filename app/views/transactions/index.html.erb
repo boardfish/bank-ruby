@@ -1,6 +1,14 @@
 <% if notice %><p id="notice" class="alert alert-primary"><%= notice %></p><% end %>
 
-<h1>Transactions for <%= @month %></h1>
+<div class="d-flex justify-content-between">
+  <% unless params[:months_back].to_i >= @all_transactions.keys.count - 1 %>
+    <%= link_to '<<', transactions_path(months_back: params[:months_back].to_i + 1), class: 'nav-link' %>
+  <% end %>
+  <h1 class="text-center">Transactions for <%= @month %></h1>
+  <% unless params[:months_back].to_i <= 0 %>
+    <%= link_to '>>', transactions_path(months_back: params[:months_back].to_i - 1), class: 'nav-link' %>
+  <% end %>
+</div>
 
 <p class="badge badge-primary"><%= number_to_currency(@balance, unit: '£') %></p>
 

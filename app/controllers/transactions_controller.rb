@@ -11,10 +11,10 @@ class TransactionsController < ApplicationController
   STARTING_BALANCE = 304.15
 
   def index
-    @transactions = transactions_by_month
+    @all_transactions = transactions_by_month
     @index = params[:months_back].to_i || 0
-    @month = @transactions.keys.reverse[@index]
-    @transactions = @transactions[@month].reverse
+    @month = @all_transactions.keys.reverse[@index]
+    @transactions = @all_transactions[@month].reverse
     @summary = @transactions.group_by(&:category_id)
                             .map do |k, v|
       { Category.find_by_id(k) => v.map { |t| t['amount'] }
