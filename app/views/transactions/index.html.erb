@@ -1,40 +1,51 @@
-<p id="notice"><%= notice %></p>
+<% if notice %><p id="notice" class="alert alert-primary"><%= notice %></p><% end %>
 
-<h1>Transactions</h1>
+<h1>Transactions for <%= @month %></h1>
 
-<p><%= @balance %></p>
+<p class="badge badge-primary"><%= number_to_currency(@balance, unit: '£') %></p>
+
+<table class="table table-sm">
+  <tr>
+    <th>Category</th>
+    <th>Amount</th>
+  </tr>
+  <% @summary.each do |category_id, sum|  %>
+      <tr>
+        <td><%= Category.find_by_id(category_id)&.name || 'Unclassified' %></td>
+        <td><%= number_to_currency(sum, unit: '£') %></td>
+      </tr>
+  <% end  %>
+</table>
 
 <table class="table">
   <thead>
     
       <tr>
         <th>Date</th>
-        <th colspan="2">Merchant</th>
+        <th colspan="2" class="text-center">Merchant</th>
         <th>Amount</th>
         <th>Category</th>
-        <th>Actions</th>
       </tr>
 
   </thead>
 
   <tbody>
     <% @transactions.each do |transaction| %>
-      <tr style="height: 50px;">
-        <td><%= transaction.created.to_formatted_s(:db) %></td>
-        <td><img style="max-width: 50px;" src="<%= transaction&.merchant&.logo %>"></img></td>
-        <td><%= transaction.name %></td>
-        <td><%= number_to_currency(transaction.amount, unit: '£') %></td>
-        <td><%= transaction.category %></td>
-        <% if transaction.category_id.nil? %>
-          <td>
-            <select>
-              <option>Food/Groceries</option>
-              <option>Accommodation</option>
-              <option>Example</option>
-            </select>
-          </td>
-        <% end %>
-        <td><%= link_to 'Show', transaction %></td>
+      <tr>
+        <td class="align-middle"><%= transaction.created.to_formatted_s(:db) %></td>
+        <td class="align-middle"><img style="max-width: 50px;" src="<%= transaction&.merchant&.logo %>"></img></td>
+        <td class="align-middle"><%= link_to transaction.name, transaction, class: 'text-body' %></td>
+        <td class="align-middle text-right"><%= number_to_currency(transaction.amount, unit: '£') %></td>
+        <td class="align-middle">
+          <%= form_for transaction do |f| %>
+            <div class="input-group">
+              <%= f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, { selected: transaction.category_id, include_blank: true }, { class: 'custom-select' } %>
+              <div class="input-group-append">
+                <%= f.submit 'Update', class: 'btn btn-success' %>
+              </div>
+            </div>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

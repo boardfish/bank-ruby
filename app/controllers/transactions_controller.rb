@@ -1,20 +1,46 @@
+# frozen_string_literal: true
+
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :edit, :update, :destroy]
+  before_action :set_transaction, only: %i[show edit update destroy]
 
   # GET /transactions
   # GET /transactions.json
   STARTING_BALANCE = 304.15
 
   def index
-    @transactions = Transaction.all.group_by { |t| t.created.beginning_of_month }
-    @transactions = @transactions[@transactions.keys.last].reverse
+    @transactions = transactions_by_month
+    @index = params[:months_back].to_i || 0
+    @month = @transactions.keys.reverse[@index]
+    @transactions = @transactions[@month].reverse
+    @summary = @transactions.group_by(&:category_id)
+                            .map do |k, v|
+      { Category.find_by_id(k) => v.map { |t| t['amount'] }
+                                   .reduce(0, :+) }
+    end .reduce(:merge)
     @balance = Transaction.sum(:amount) + STARTING_BALANCE
+  end
+
+  def summary
+    @transactions = transactions_by_month
+    @summary = @transactions.map do |month, tr|
+      { month => tr.group_by(&:category_id)
+                   .map do |k, v|
+                   { Category.find_by_id(k) => v.map { |t| t['amount'] }
+                                                .reduce(0, :+) }
+                 end .reduce(:merge) }
+    end.reduce(:merge)
+  end
+
+  def transactions_by_month
+    Transaction.all
+               .group_by { |t| t.created.beginning_of_month }
+               .map { |k, v| { k.strftime('%m/%Y') => v } }
+               .reduce(:merge)
   end
 
   # GET /transactions/1
   # GET /transactions/1.json
-  def show
-  end
+  def show; end
 
   # GET /transactions/new
   def new
@@ -22,8 +48,7 @@ class TransactionsController < ApplicationController
   end
 
   # GET /transactions/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /transactions
   # POST /transactions.json
@@ -46,10 +71,10 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully updated.' }
+        format.html { redirect_to transactions_path, notice: 'Transaction was successfully updated.' }
         format.json { render :show, status: :ok, location: @transaction }
       else
-        format.html { render :edit }
+        format.html { render transactions_path, notice: 'Couldn\'t update transaction.' }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
     end
@@ -66,13 +91,14 @@ class TransactionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_transaction
-      @transaction = Transaction.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def transaction_params
-      params.fetch(:transaction, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_transaction
+    @transaction = Transaction.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def transaction_params
+    params.require(:transaction).permit(:category_id)
+  end
 end

@@ -1,0 +1,19 @@
+<% if notice %><p id="notice" class="alert alert-primary"><%= notice %></p><% end %>
+
+<h1>Transaction Summary</h1>
+
+<%# <p class="badge badge-primary"><%= number_to_currency(@balance, unit: '£') %1></p> %>
+
+<table class="table table-sm">
+  
+  <% @summary.each do |month, summary|  %>
+    <% summary.each do |category_id, sum|  %>
+        <tr>
+          <td><%= Category.find_by_id(category_id)&.name || 'Unclassified' %></td>
+          <td><%= number_to_currency(sum, unit: '£') %></td>
+        </tr>
+    <% end  %>
+  <% end  %>
+</table>
+
+<br>
