@@ -1,12 +1,17 @@
-<% if notice %><p id="notice" class="alert alert-primary"><%= notice %></p><% end %>
+<% if notice %>
+  <p id="notice" class="alert alert-primary">
+    <%= icon('fas', 'info-circle') %>
+    <%= notice %>
+  </p>
+<% end %>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between align-items-center">
   <% unless params[:months_back].to_i >= @all_transactions.keys.count - 1 %>
-    <%= link_to '<<', transactions_path(months_back: params[:months_back].to_i + 1), class: 'nav-link' %>
+    <%= link_to icon('fas', 'arrow-left').html_safe, transactions_path(months_back: params[:months_back].to_i + 1), class: 'btn btn-dark align-middle' %>
   <% end %>
   <h1 class="text-center">Transactions for <%= @month %></h1>
   <% unless params[:months_back].to_i <= 0 %>
-    <%= link_to '>>', transactions_path(months_back: params[:months_back].to_i - 1), class: 'nav-link' %>
+    <%= link_to icon('fas', 'arrow-right'), transactions_path(months_back: params[:months_back].to_i - 1), class: 'btn btn-dark align-middle' %>
   <% end %>
 </div>
 
@@ -25,14 +30,14 @@
   <% end  %>
 </table>
 
-<table class="table">
+<table class="table table-sm">
   <thead>
     
       <tr>
-        <th>Date</th>
-        <th colspan="2" class="text-center">Merchant</th>
-        <th>Amount</th>
-        <th>Category</th>
+        <th class="text-center"><%= icon('fas', 'calendar-alt') %> Date</th>
+        <th colspan="2" class="text-center"><%= icon('fas', 'shopping-bag') %> Merchant</th>
+        <th class="text-right"><%= icon('fas', 'pound-sign') %> Amount</th>
+        <th class="text-center"><%= icon('fas', 'question') %> Category</th>
       </tr>
 
   </thead>
@@ -40,7 +45,13 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td class="align-middle"><%= transaction.created.to_formatted_s(:db) %></td>
+        <td class="d-flex h-100 align-items-center">
+          <p class="fa-layers fa-fw fa-2x mb-0">
+            <%= icon('fas', 'calendar') %>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-8 down-3" style="font-weight:900"><%= transaction.created.strftime('%d') %></span>
+          </p>
+          <p class="badge badge-dark mb-0"><%= transaction.created.strftime('%H:%M') %></p>
+        </td>
         <td class="align-middle"><img style="max-width: 50px;" src="<%= transaction&.merchant&.logo %>"></img></td>
         <td class="align-middle"><%= link_to transaction.name, transaction, class: 'text-body' %></td>
         <td class="align-middle text-right"><%= number_to_currency(transaction.amount, unit: '£') %></td>
@@ -49,7 +60,10 @@
             <div class="input-group">
               <%= f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, { selected: transaction.category_id, include_blank: true }, { class: 'custom-select' } %>
               <div class="input-group-append">
-                <%= f.submit 'Update', class: 'btn btn-success' %>
+                <%# <%= f.submit "Submit #{icon('fas', 'edit')}".html_safe, class: 'btn btn-success' %1> %>
+                <%= button_tag(type: 'submit', class: "btn btn-success") do %>
+                   <%= icon('fas', 'edit') %>
+                 <% end %>
               </div>
             </div>
           <% end %>
