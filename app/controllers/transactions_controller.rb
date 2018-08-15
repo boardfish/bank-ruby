@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'json'
+
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show edit update destroy]
+  protect_from_forgery except: [:monzo_webhook_add]
 
   # GET /transactions
   # GET /transactions.json
@@ -65,8 +68,33 @@ class TransactionsController < ApplicationController
 
   # POST /transactions
   # POST /transactions.json
-  def create
-    @transaction = Transaction.new(transaction_params)
+  def monzo_webhook_add
+    request_body = JSON.parse(request.body.read)
+    return unless request_body['type'] == "transaction.created"
+    source = request_body['data']
+    merchant = source['merchant']
+    unless merchant.nil?
+      internal_merchant = Merchant.create(
+        name: merchant['name'],
+        logo: merchant['logo'],
+        monzo_id: merchant['id'],
+        group_id: merchant['group_id'],
+        created: merchant['created'],
+        address: merchant['address']
+      )
+    end
+    @transaction = Transaction.create(
+      amount: source['amount'],
+      created: source['created'],
+      currency: source['currency'],
+      description: source['description'],
+      merchant_id: internal_merchant&.id,
+      notes: source['notes'],
+      is_load: source['is_load'],
+      settled: source['settled'],
+      monzo_category: internal_merchant&.category,
+      category_id: nil
+    )
 
     respond_to do |format|
       if @transaction.save
