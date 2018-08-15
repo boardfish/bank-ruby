@@ -27,9 +27,13 @@ class TransactionsController < ApplicationController
     @transactions_by_month = transactions_by_month
     @summary = transactions_by_category.map do |cid, t_b_m|
       { cid => t_b_m.map do |m, ts|
-        { m => ts.map { |t| t.amount }.reduce(0, :+) }
+        { m => ts.map(&:amount).reduce(0, :+) }
       end.reduce(:merge) }
     end.reduce(:merge)
+    cumulative_total = STARTING_BALANCE
+    @totals = @transactions_by_month.map { |_month, transactions|
+      transactions.map(&:amount).reduce(0, :+)
+    }.map{ |sum| cumulative_total += sum }
   end
 
   def group_by_month(transactions)
@@ -70,7 +74,7 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def monzo_webhook_add
     request_body = JSON.parse(request.body.read)
-    return unless request_body['type'] == "transaction.created"
+    return unless request_body['type'] == 'transaction.created'
     source = request_body['data']
     merchant = source['merchant']
     unless merchant.nil?

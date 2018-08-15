@@ -20,6 +20,14 @@
       <% end  %>
     </tr>
   <% end  %>
+  <tr>
+    <th>Total</th>
+    <% @totals.each do |sum| %>
+      <td>
+        <%= number_to_currency(sum, unit: '£') %>
+      </td>
+    <% end %>
+  </tr>
 </table>
 
 <br>
