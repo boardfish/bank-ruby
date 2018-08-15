@@ -21,21 +21,34 @@ class TransactionsController < ApplicationController
   end
 
   def summary
-    @transactions = transactions_by_month
-    @summary = @transactions.map do |month, tr|
-      { month => tr.group_by(&:category_id)
-                   .map do |k, v|
-                   { Category.find_by_id(k) => v.map { |t| t['amount'] }
-                                                .reduce(0, :+) }
-                 end .reduce(:merge) }
+    @transactions_by_month = transactions_by_month
+    @summary = transactions_by_category.map do |cid, t_b_m|
+      { cid => t_b_m.map do |m, ts|
+        { m => ts.map { |t| t.amount }.reduce(0, :+) }
+      end.reduce(:merge) }
     end.reduce(:merge)
   end
 
+  def group_by_month(transactions)
+    transactions
+      .group_by { |t| t.created.beginning_of_month }
+      .map { |k, v| { k.strftime('%m/%Y') => v } }
+      .reduce(:merge)
+  end
+
+  def group_by_category(transactions)
+    transactions
+      .group_by(&:category_id)
+      .map { |c, t| { c => group_by_month(t) } }
+      .reduce(:merge)
+  end
+
   def transactions_by_month
-    Transaction.all
-               .group_by { |t| t.created.beginning_of_month }
-               .map { |k, v| { k.strftime('%m/%Y') => v } }
-               .reduce(:merge)
+    group_by_month(Transaction.all)
+  end
+
+  def transactions_by_category
+    group_by_category(Transaction.all)
   end
 
   # GET /transactions/1

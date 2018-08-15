@@ -9,11 +9,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 MONDO_TOKEN = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYiI6IlVQQ1RDRTdYcndPSDhMT1lEUU9VIiwianRpIjoiYWNjdG9rXzAwMDA5WmdSMzc5NEJrZ2Rxb1AyUUwiLCJ0eXAiOiJhdCIsInYiOiI1In0.hO3EyGYZ1ddEiqDp_uHucQDa24a8cpEskzcrgfhkHxUy8cZPH5Wy4GbNs8UvANr7EeudMU_jl5UdAmdgCDKo9A'
 
-def seed_transactions
-  mondo = Mondo::Client.new(
+def initialize_mondo_client
+  Mondo::Client.new(
     token: MONDO_TOKEN,
     account_id: 'acc_00009OmUPqUtCwfIwsJnNZ'
   )
+end
+
+def seed_transactions
+  mondo = initialize_mondo_client
   transactions = mondo.transactions
   puts "Transactions: #{transactions.count}"
   transactions.each do |transaction|
@@ -58,6 +62,11 @@ def seed_categories
   categories.each do |c|
     Category.create(name: c)
   end
+end
+
+def enable_webhook
+  mondo = initialize_mondo_client
+  mondo.register_web_hook("#{ENV['ROOT_URL']}/transactions/add_new") 
 end
 
 seed_categories

@@ -6,13 +6,19 @@
 
 <table class="table table-sm">
   
-  <% @summary.each do |month, summary|  %>
-    <% summary.each do |category_id, sum|  %>
-        <tr>
-          <td><%= Category.find_by_id(category_id)&.name || 'Unclassified' %></td>
-          <td><%= number_to_currency(sum, unit: '£') %></td>
-        </tr>
-    <% end  %>
+  <tr>
+    <th>Category</th>
+    <% @transactions_by_month.each do |month, transactions| %>
+      <th><%= month %></th>
+    <% end %>
+  </tr>
+  <% @summary.each do |category_id, summary|  %>
+    <tr>
+      <th><%= Category.find_by_id(category_id)&.name || 'Unclassified' %></td>
+      <% @transactions_by_month.each do |month, transactions|  %>
+        <td><%= number_to_currency(@summary.dig(category_id, month), unit: '£') %></td>
+      <% end  %>
+    </tr>
   <% end  %>
 </table>
 
