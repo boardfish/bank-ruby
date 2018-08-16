@@ -18,7 +18,7 @@ end
 
 def seed_transactions
   mondo = initialize_mondo_client
-  transactions = mondo.transactions
+  transactions = mondo.transactions(since: "2018-07-01T00:00:00Z")
   puts "Transactions: #{transactions.count}"
   transactions.each do |transaction|
     merchant = transaction.merchant
@@ -69,4 +69,6 @@ def enable_webhook
   mondo.register_web_hook("#{ENV['ROOT_URL']}/transactions/add_new") 
 end
 
+seed_transactions
 seed_categories
+enable_webhook
