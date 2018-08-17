@@ -118,6 +118,7 @@ class TransactionsController < ApplicationController
       if @transaction.update(transaction_params)
         format.html { redirect_to transactions_path, notice: 'Transaction was successfully updated.' }
         format.json { render :show, status: :ok, location: @transaction }
+        format.js
       else
         format.html { render transactions_path, notice: 'Couldn\'t update transaction.' }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
