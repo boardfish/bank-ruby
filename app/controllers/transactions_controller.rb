@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
-  STARTING_BALANCE = 304.15
+  STARTING_BALANCE = 38.81
 
   def index
     @all_transactions = transactions_by_month
@@ -96,7 +96,7 @@ class TransactionsController < ApplicationController
       notes: source['notes'],
       is_load: source['is_load'],
       settled: source['settled'],
-      monzo_category: internal_merchant&.category,
+      monzo_category: source['category'],
       category_id: nil
     )
 
