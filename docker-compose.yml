@@ -13,3 +13,9 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    environment:
+      - ROOT_URL
+      - STARTING_BALANCE
+      - SEED_START_DATE
+      - MONDO_TOKEN
+      - ACCOUNT_ID

@@ -1,24 +1,49 @@
-# README
+# bank-ruby
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A finance planner that's (mostly) automated. All you need to do is categorise your transactions manually!
 
-Things you may want to cover:
+This and its predecessor `bank` are very much inspired by our family's way of doing finances - setting budgets for a bunch of different categories and using that to forecast how much we're likely to spend or save in future.
 
-* Ruby version
+## Capabilities
 
-* System dependencies
+- Retrieve your transactions from Monzo as and when they happen with the webhook endpoint.
+- Categorise your transactions completely manually.
+- See how much you've spent in each category each month.
 
-* Configuration
+### Upcoming capabilities
 
-* Database creation
+- Set budgets/average income for each category.
+- Forecast how much you're likely to have in future based on your budgets and average income.
+- More flexibility on the above.
+- Cleaner mobile UI
+- In-feed reminders to do your finances
 
-* Database initialization
+## Deployment
 
-* How to run the test suite
+Make sure that all environment variables are set.
 
-* Services (job queues, cache servers, search engines, etc.)
+- MONDO_TOKEN: A Monzo API token. OAuth will be supported...when `mondo-ruby` supports it. *I'll actively try to contribute to that gem in order to further `bank-ruby`'s development.*
+- ROOT_URL: The external URL that you're hosting your instance of `bank-ruby` on. **You should secure all endpoints if possible**, but leave `/monzo_webhook_add` exposed if you don't wish to seed the system manually every time you want to update your transactions.
+- ACCOUNT_ID: Especially for beta users, Monzo considers your default account as your first account - that being your now-dead prepaid card. If necessary, supply your account ID manually here.
+- STARTING_BALANCE: The balance of your account, in pounds, at the seed start date. I might get this from the first transaction in future.
+- SEED_START_DATE: An ISO8601 date indicating the point from which you'd like to start seeding the system.
 
-* Deployment instructions
+You may also want to modify the category list to your liking. I'll make this more flexible within the system in future.
 
-* ...
+`docker-compose build; docker-compose up -d`
+
+## FAQs
+
+### How can I contribute?
+
+Make a pull request! Fork the project, create a branch detailing what you're going to do (e.g. `improve-user-interface`), and once all your changes are done, submit a pull request.
+
+### Why aren't you running this thing as a service?
+
+Security. I don't need to say much more than that. It's really on you to secure your instance of `bank-ruby` as best you can, because after all, it's got your financial data. If you really want to be safe, don't use the webhook, but that takes much of the convenience out of it, really.
+
+I'll be providing guidance on nginx configs in this README in the near future.
+
+### What drove you to do this?
+
+Again, one word answer - utility. I'm gonna make use of it, and I hope you are too.
