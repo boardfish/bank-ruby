@@ -88,9 +88,9 @@ class TransactionsController < ApplicationController
       )
     end
     @transaction = Transaction.create(
-      amount: source['amount'],
+      amount: source['amount'] / 100.0,
       created: source['created'],
-      currency: source['currency'] / 100.0,
+      currency: source['currency'],
       description: source['description'],
       merchant_id: internal_merchant&.id,
       notes: source['notes'],
