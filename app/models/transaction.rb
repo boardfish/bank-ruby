@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Transaction: Represents a transaction to or from a Monzo account.
 class Transaction < ApplicationRecord
   def name
     if !merchant_id.nil?

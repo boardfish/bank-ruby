@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddInternalCategoryToTransactions < ActiveRecord::Migration[5.2]
   def change
     rename_column :transactions, :category, :monzo_category

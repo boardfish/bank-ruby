@@ -68,7 +68,7 @@ end
 
 def enable_webhook
   mondo = initialize_mondo_client
-  mondo.register_web_hook("#{ENV['ROOT_URL']}/monzo_webhook_add") 
+  mondo.register_web_hook("#{ENV['ROOT_URL']}/monzo_webhook_add")
 end
 
 seed_transactions
