@@ -24,7 +24,7 @@
   </tr>
   <% @summary.each do |category_id, sum|  %>
       <tr>
-        <td><%= Category.find_by_id(category_id)&.name.humanize || 'Unclassified' %></td>
+        <td><%= Category.find_by_id(category_id)&.name&.humanize || 'Unclassified' %></td>
         <td><%= number_to_currency(sum, unit: '£') %></td>
       </tr>
   <% end  %>

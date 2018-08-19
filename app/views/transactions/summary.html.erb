@@ -14,7 +14,7 @@
   </tr>
   <% @summary.each do |category_id, summary|  %>
     <tr>
-      <th><%= Category.find_by_id(category_id)&.name.humanize || 'Unclassified' %></td>
+      <th><%= Category.find_by_id(category_id)&.name&.humanize || 'Unclassified' %></td>
       <% @transactions_by_month.each do |month, transactions|  %>
         <td><%= number_to_currency(@summary.dig(category_id, month), unit: '£') %></td>
       <% end  %>
