@@ -1,4 +1,7 @@
 class Transaction < ApplicationRecord
+  validates_presence_of :monzo_id
+  validates_uniqueness_of :monzo_id
+
   def name
     if !merchant_id.nil?
       Merchant.find(merchant_id).name
