@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Transaction: Represents a transaction to or from a Monzo account.
 class Transaction < ApplicationRecord
   validates_presence_of :monzo_id
   validates_uniqueness_of :monzo_id

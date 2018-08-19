@@ -2,6 +2,8 @@
 
 require 'json'
 
+# TransactionsController - Allows the user to see their transactions by month
+# or in a summary
 class TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show edit update destroy]
   protect_from_forgery except: [:monzo_webhook_add]
@@ -31,9 +33,10 @@ class TransactionsController < ApplicationController
       end.reduce(:merge) }
     end.reduce(:merge)
     cumulative_total = STARTING_BALANCE
-    @totals = @transactions_by_month.map { |_month, transactions|
+    @totals = @transactions_by_month.map do |_month, transactions|
       transactions.map(&:amount).reduce(0, :+)
-    }.map{ |sum| cumulative_total += sum }
+    end
+    @totals = @totals.map { |sum| cumulative_total += sum }
   end
 
   def group_by_month(transactions)
@@ -58,6 +61,33 @@ class TransactionsController < ApplicationController
     group_by_category(Transaction.all)
   end
 
+  def monzo_request_to_transaction(source, internal_merchant)
+    Transaction.create(
+      amount: source['amount'] / 100.0,
+      created: source['created'],
+      currency: source['currency'],
+      description: source['description'],
+      merchant_id: internal_merchant&.id,
+      notes: source['notes'],
+      is_load: source['is_load'],
+      settled: source['settled'],
+      monzo_category: source['category'],
+      category_id: nil
+    )
+  end
+
+  def monzo_request_to_merchant(source)
+    return if source.nil?
+    Merchant.where(monzo_id: source['id']).first_or_create do |merchant|
+      merchant.name = source['name']
+      merchant.logo = source['logo']
+      merchant.monzo_id = source['id']
+      merchant.group_id = source['group_id']
+      merchant.created = source['created']
+      merchant.address = source['address']
+    end
+  end
+
   # GET /transactions/1
   # GET /transactions/1.json
   def show; end
@@ -77,36 +107,22 @@ class TransactionsController < ApplicationController
     return unless request_body['type'] == 'transaction.created'
     source = request_body['data']
     merchant = source['merchant']
-    unless merchant.nil?
-      internal_merchant = Merchant.create(
-        name: merchant['name'],
-        logo: merchant['logo'],
-        monzo_id: merchant['id'],
-        group_id: merchant['group_id'],
-        created: merchant['created'],
-        address: merchant['address']
-      )
-    end
-    @transaction = Transaction.create(
-      amount: source['amount'] / 100.0,
-      created: source['created'],
-      currency: source['currency'],
-      description: source['description'],
-      merchant_id: internal_merchant&.id,
-      notes: source['notes'],
-      is_load: source['is_load'],
-      settled: source['settled'],
-      category_id: Category.find_or_create_by(name: source['category']).id,
-      monzo_id: source['id']
-    )
+    internal_merchant = monzo_request_to_merchant(merchant)
+    @transaction = monzo_request_to_transaction(source, internal_merchant)
 
     respond_to do |format|
       if @transaction.save
-        format.html { redirect_to @transaction, notice: 'Transaction was successfully created.' }
+        format.html do
+          redirect_to @transaction,
+                      notice: 'Transaction was successfully created.'
+        end
         format.json { render :show, status: :created, location: @transaction }
       else
         format.html { render :new }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @transaction.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end
@@ -116,12 +132,15 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        format.html { redirect_to transactions_path, notice: 'Transaction was successfully updated.' }
+        format.html redirect_to transactions_path,
+                                notice: 'Transaction was successfully updated.'
         format.json { render :show, status: :ok, location: @transaction }
         format.js
       else
-        format.html { render transactions_path, notice: 'Couldn\'t update transaction.' }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        format.html  render transactions_path,
+                            notice: 'Couldn\'t update transaction.'
+        format.json  render json: @transaction.errors,
+                            status: :unprocessable_entity
       end
     end
   end
@@ -131,7 +150,10 @@ class TransactionsController < ApplicationController
   def destroy
     @transaction.destroy
     respond_to do |format|
-      format.html { redirect_to transactions_url, notice: 'Transaction was successfully destroyed.' }
+      format.html do
+        redirect_to transactions_url,
+                    notice: 'Transaction was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
@@ -143,7 +165,8 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list
+  # through.
   def transaction_params
     params.require(:transaction).permit(:category_id)
   end
