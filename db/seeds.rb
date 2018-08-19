@@ -43,7 +43,8 @@ def seed_transactions
       notes: transaction.notes,
       is_load: transaction.is_load,
       settled: transaction.settled,
-      category_id: transaction.category.nil? ? nil : Category.find_or_create_by(name: transaction.category).id
+      category_id: transaction.category.nil? ? nil : Category.find_or_create_by(name: transaction.category).id,
+      monzo_id: transaction.id
     )
   end
 end
