@@ -43,7 +43,7 @@ def seed_transactions
       notes: transaction.notes,
       is_load: transaction.is_load,
       settled: transaction.settled,
-      monzo_category: transaction.category
+      monzo_id: transaction.id
     )
   end
 end
