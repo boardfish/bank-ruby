@@ -10,7 +10,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   # GET /transactions.json
-  STARTING_BALANCE = ENV['STARTING_BALANCE'].to_i
+  STARTING_BALANCE = ENV['STARTING_BALANCE'].to_f
 
   def index
     @all_transactions = transactions_by_month
