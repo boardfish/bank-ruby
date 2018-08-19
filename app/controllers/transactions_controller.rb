@@ -96,7 +96,7 @@ class TransactionsController < ApplicationController
       notes: source['notes'],
       is_load: source['is_load'],
       settled: source['settled'],
-      monzo_category: source['category'],
+      monzo_id: source['id'],
       category_id: nil
     )
 
