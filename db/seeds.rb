@@ -43,7 +43,7 @@ def seed_transactions
       notes: transaction.notes,
       is_load: transaction.is_load,
       settled: transaction.settled,
-      monzo_category: transaction.category
+      category_id: transaction.category.nil? ? nil : Category.find_or_create_by(name: transaction.category).id
     )
   end
 end
@@ -62,7 +62,7 @@ def seed_categories
     'Social'
   ]
   categories.each do |c|
-    Category.create(name: c)
+    Category.find_or_create_by(name: c)
   end
 end
 
