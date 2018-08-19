@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_14_211508) do
+ActiveRecord::Schema.define(version: 2018_08_19_120904) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2018_08_14_211508) do
     t.string "decline_reason"
     t.boolean "is_load"
     t.datetime "settled"
-    t.string "monzo_category"
     t.datetime "created"
     t.string "currency"
     t.string "description"
