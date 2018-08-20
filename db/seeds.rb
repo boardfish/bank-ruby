@@ -18,9 +18,9 @@ def initialize_mondo_client
   )
 end
 
-def seed_transactions
+def seed_transactions(from = SEED_START_DATE)
   mondo = initialize_mondo_client
-  transactions = mondo.transactions(since: SEED_START_DATE)
+  transactions = mondo.transactions(since: from)
   puts "Transactions: #{transactions.count}"
   transactions.each do |transaction|
     merchant = transaction.merchant

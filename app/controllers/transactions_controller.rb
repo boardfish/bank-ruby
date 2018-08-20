@@ -71,7 +71,8 @@ class TransactionsController < ApplicationController
       notes: source['notes'],
       is_load: source['is_load'],
       settled: source['settled'],
-      category_id: Category.find_or_create_by(name: source['category'])
+      category_id: Category.find_or_create_by(name: source['category']),
+      monzo_id: source['id']
     )
   end
 
