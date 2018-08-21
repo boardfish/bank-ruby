@@ -54,6 +54,8 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
