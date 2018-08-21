@@ -11,9 +11,8 @@ RSpec.describe Transaction, type: :model do
       .to include('has already been taken')
   end
 
-  pending 'has all given info when created by a request to monzo_webhook_add' do
-  end
-
+  # Temporary - Transaction creation will be moved to a service/helper,
+  # especially with regards to transmuting requests into Transactions.
   pending 'has all given info when created via seeding' do
   end
 end
