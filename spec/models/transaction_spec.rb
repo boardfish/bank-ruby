@@ -13,6 +13,6 @@ RSpec.describe Transaction, type: :model do
 
   # Temporary - Transaction creation will be moved to a service/helper,
   # especially with regards to transmuting requests into Transactions.
-  pending 'has all given info when created via seeding' do
+  xit 'has all given info when created via seeding' do
   end
 end
