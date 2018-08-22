@@ -1,3 +1,5 @@
 language: ruby
 rvm:
   - 2.5.1
+env:
+  - MONDO_TOKEN="super secret token" ACCOUNT_ID="super secret account id"
