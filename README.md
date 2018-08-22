@@ -1,4 +1,4 @@
-# bank-ruby
+# bank-ruby ![](https://travis-ci.org/boardfish/bank-ruby.svg?branch=master)
 
 A finance planner that's (mostly) automated. All you need to do is categorise your transactions manually!
 
