@@ -7,11 +7,11 @@
 
 <div class="d-flex justify-content-between align-items-center">
   <% unless params[:months_back].to_i >= @all_transactions.keys.count - 1 %>
-    <%= link_to icon('fas', 'arrow-left').html_safe, transactions_path(months_back: params[:months_back].to_i + 1), class: 'btn btn-dark align-middle' %>
+    <%= link_to icon('fas', 'arrow-left').html_safe, transactions_path(months_back: (params[:months_back].to_i).clamp(0, @all_transactions.keys.length - 1) + 1), class: 'btn btn-dark align-middle' %>
   <% end %>
   <h1 class="text-center">Transactions for <%= @month %></h1>
   <% unless params[:months_back].to_i <= 0 %>
-    <%= link_to icon('fas', 'arrow-right'), transactions_path(months_back: params[:months_back].to_i - 1), class: 'btn btn-dark align-middle' %>
+    <%= link_to icon('fas', 'arrow-right'), transactions_path(months_back: (params[:months_back].to_i).clamp(0, @all_transactions.keys.length - 1) - 1), class: 'btn btn-dark align-middle' %>
   <% end %>
 </div>
 

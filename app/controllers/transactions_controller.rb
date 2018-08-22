@@ -14,7 +14,9 @@ class TransactionsController < ApplicationController
 
   def index
     @all_transactions = transactions_by_month
-    @index = params[:months_back].to_i || 0
+    @index = params[:months_back]
+             .to_i
+             .clamp(0, @all_transactions.keys.length - 1) || 0
     @month = @all_transactions.keys.reverse[@index]
     @transactions = @all_transactions[@month].reverse
     @summary = @transactions.group_by(&:category_id)
