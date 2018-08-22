@@ -32,6 +32,8 @@ You may also want to modify the category list to your liking. I'll make this mor
 
 `docker-compose build; docker-compose up -d`
 
+I'm using `nginx` on my personal server, and I've provided an example config that you might want to use. Build `nginx` with digest authentication support, use `certbot` to get a cert for your subdomain (or a wildcard!), then update the `example-nginx-config` to use your hostname, cert and `.passwd.digest`. If all goes to plan, you'll be asked for the username and password you defined when using `htdigest` to create your `passwd.digest`, and your instance will be using HTTPS. If I can track down the tutorials I used, I'll attach them here too.
+
 ## FAQs
 
 ### How can I contribute?
