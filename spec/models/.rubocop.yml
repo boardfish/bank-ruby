@@ -1,0 +1,7 @@
+# Temporary cop-scumming until I figure out how to structure this.
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false

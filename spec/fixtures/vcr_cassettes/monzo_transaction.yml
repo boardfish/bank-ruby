@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.getmondo.co.uk/transactions/tx_00009PCgONNoDdKBkR1Jw1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - mondo-ruby/v0.5.0 (ruby 2.5.1 p57; x86_64-darwin16)
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYiI6IlFIUm9qZ01MczUyL1RlK2t2MVJKIiwianRpIjoiYWNjdG9rXzAwMDA5WncyYWZMY2Vrdk45d1hLR1AiLCJ0eXAiOiJhdCIsInYiOiI1In0.YLD59CP6j8MDsdx9IwxRC2pIXkQQtlw_4JsSurUeNri0IE_t0xRYeb-hPzR5XJy2blAEETH99FGXW6HjJFv77g
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 22 Aug 2018 08:07:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d230852fccbd8463b9e550c70bc5a85f91534925233; expires=Thu, 22-Aug-19
+        08:07:13 GMT; path=/; domain=.getmondo.co.uk; HttpOnly
+      Trace-Id:
+      - 3eda8527-d413-449b-58a1-04798dff8c76
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 44e3d8356ac0bc3e-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: '{"transaction":{"id":"tx_00009PCgONNoDdKBkR1Jw1","created":"2017-10-05T08:06:34.78Z","description":"DIXONS
+        ADD             MANCHESTER T1 GBR","amount":-499,"fees":{},"currency":"GBP","merchant":"merch_00009A7tlfun7IdfHL4byL","notes":"","metadata":{"ledger_insertion_id":"entryset_00009PCgOMpQHU7Ohn2FZh","mastercard_auth_message_id":"mcauthmsg_00009PCgOKE7xB64dXZRAH","mastercard_lifecycle_id":"mclifecycle_00009PCgOKf4KzuNTw5B57"},"labels":null,"account_balance":0,"attachments":[],"international":null,"category":"holidays","is_load":false,"settled":"2017-10-06T02:33:44.792Z","local_amount":-499,"local_currency":"GBP","updated":"2017-10-06T02:33:44.796Z","account_id":"acc_00009OmUPqUtCwfIwsJnNZ","user_id":"","counterparty":{},"scheme":"mastercard","dedupe_id":"mclifecycle:mclifecycle_00009PCgOKf4KzuNTw5B57:MASTERCARD_AUTH:mcauthmsg_00009PCgOKE7xB64dXZRAH","originator":false,"include_in_spending":true,"can_be_excluded_from_breakdown":true,"can_be_made_subscription":true,"can_split_the_bill":true}}'
+    http_version: 
+  recorded_at: Wed, 22 Aug 2018 08:07:13 GMT
+- request:
+    method: get
+    uri: https://api.getmondo.co.uk/transactions/tx_00009PCgONNoDdKBkR1Jw1?expand%5B%5D=merchant
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - mondo-ruby/v0.5.0 (ruby 2.5.1 p57; x86_64-darwin16)
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlYiI6IlFIUm9qZ01MczUyL1RlK2t2MVJKIiwianRpIjoiYWNjdG9rXzAwMDA5WncyYWZMY2Vrdk45d1hLR1AiLCJ0eXAiOiJhdCIsInYiOiI1In0.YLD59CP6j8MDsdx9IwxRC2pIXkQQtlw_4JsSurUeNri0IE_t0xRYeb-hPzR5XJy2blAEETH99FGXW6HjJFv77g
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 22 Aug 2018 08:07:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=dd5d15f4f8127da4c24a8a4b03f5df3ce1534925233; expires=Thu, 22-Aug-19
+        08:07:13 GMT; path=/; domain=.getmondo.co.uk; HttpOnly
+      Trace-Id:
+      - e1813cc8-3f25-473f-62d4-e4dd67fd4dd0
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 44e3d837ae02bc50-LHR
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJ0cmFuc2FjdGlvbiI6eyJpZCI6InR4XzAwMDA5UENnT05Ob0RkS0JrUjFKdzEiLCJjcmVhdGVkIjoiMjAxNy0xMC0wNVQwODowNjozNC43OFoiLCJkZXNjcmlwdGlvbiI6IkRJWE9OUyBBREQgICAgICAgICAgICAgTUFOQ0hFU1RFUiBUMSBHQlIiLCJhbW91bnQiOi00OTksImZlZXMiOnt9LCJjdXJyZW5jeSI6IkdCUCIsIm1lcmNoYW50Ijp7ImlkIjoibWVyY2hfMDAwMDlBN3RsZnVuN0lkZkhMNGJ5TCIsImdyb3VwX2lkIjoiZ3JwXzAwMDA5QTd0bGZyeEhxTjE4WGtMWUgiLCJjcmVhdGVkIjoiMjAxNi0wNy0xMVQwODo0MToyMi44NDdaIiwibmFtZSI6IkRpeG9ucyBUcmF2ZWwiLCJsb2dvIjoiaHR0cHM6Ly9tb25kby1sb2dvLWNhY2hlLmFwcHNwb3QuY29tL3R3aXR0ZXIvZGl4b25zX3RyYXZlbC8/c2l6ZT1sYXJnZSIsImVtb2ppIjoi8J+UjCIsImNhdGVnb3J5Ijoic2hvcHBpbmciLCJvbmxpbmUiOmZhbHNlLCJhdG0iOmZhbHNlLCJhZGRyZXNzIjp7InNob3J0X2Zvcm1hdHRlZCI6IlRlcm1pbmFsIDEsIE1hbmNoZXN0ZXIgVDEgTTkwIDFRWCIsImZvcm1hdHRlZCI6IlRlcm1pbmFsIDEsIE1hbmNoZXN0ZXIgVDEgTTkwIDFRWCwgVW5pdGVkIEtpbmdkb20iLCJhZGRyZXNzIjoiVGVybWluYWwgMSIsImNpdHkiOiJNYW5jaGVzdGVyIFQxIiwicmVnaW9uIjoiIiwiY291bnRyeSI6IkdCUiIsInBvc3Rjb2RlIjoiTTkwIDFRWCIsImxhdGl0dWRlIjo1My4zNjE5MzYzLCJsb25naXR1ZGUiOi0yLjI3Mjk3MTY5LCJ6b29tX2xldmVsIjoxNywiYXBwcm94aW1hdGUiOmZhbHNlfSwidXBkYXRlZCI6IjIwMTYtMTItMTZUMjI6MTI6MzMuMzMxWiIsIm1ldGFkYXRhIjp7ImNyZWF0ZWRfZm9yX3RyYW5zYWN0aW9uIjoidHhfMDAwMDlBN3RsZmJJSG1XUnVZSjVxRCIsImVucmljaGVkX2Zyb21fc2V0dGxlbWVudCI6InR4XzAwMDA5QTd0bGZiSUhtV1J1WUo1cUQiLCJmb3Vyc3F1YXJlX2NhdGVnb3J5IjoiRWxlY3Ryb25pY3MgU3RvcmUiLCJmb3Vyc3F1YXJlX2lkIjoiNGYzMjVlYjJlNGIwMTk1ODkzMjUzMzk0IiwiZm91cnNxdWFyZV93ZWJzaXRlIjoiaHR0cDovL3d3dy5kaXhvbnN0cmF2ZWwuY29tIiwic3VnZ2VzdGVkX25hbWUiOiJEaXhvbnMgVHJhdmVsIiwidHdpdHRlcl9pZCI6ImRpeG9uc190cmF2ZWwifSwiZGlzYWJsZV9mZWVkYmFjayI6ZmFsc2V9LCJub3RlcyI6IiIsIm1ldGFkYXRhIjp7ImxlZGdlcl9pbnNlcnRpb25faWQiOiJlbnRyeXNldF8wMDAwOVBDZ09NcFFIVTdPaG4yRlpoIiwibWFzdGVyY2FyZF9hdXRoX21lc3NhZ2VfaWQiOiJtY2F1dGhtc2dfMDAwMDlQQ2dPS0U3eEI2NGRYWlJBSCIsIm1hc3RlcmNhcmRfbGlmZWN5Y2xlX2lkIjoibWNsaWZlY3ljbGVfMDAwMDlQQ2dPS2Y0S3p1TlR3NUI1NyJ9LCJsYWJlbHMiOm51bGwsImFjY291bnRfYmFsYW5jZSI6MCwiYXR0YWNobWVudHMiOltdLCJpbnRlcm5hdGlvbmFsIjpudWxsLCJjYXRlZ29yeSI6ImhvbGlkYXlzIiwiaXNfbG9hZCI6ZmFsc2UsInNldHRsZWQiOiIyMDE3LTEwLTA2VDAyOjMzOjQ0Ljc5MloiLCJsb2NhbF9hbW91bnQiOi00OTksImxvY2FsX2N1cnJlbmN5IjoiR0JQIiwidXBkYXRlZCI6IjIwMTctMTAtMDZUMDI6MzM6NDQuNzk2WiIsImFjY291bnRfaWQiOiJhY2NfMDAwMDlPbVVQcVV0Q3dmSXdzSm5OWiIsInVzZXJfaWQiOiIiLCJjb3VudGVycGFydHkiOnt9LCJzY2hlbWUiOiJtYXN0ZXJjYXJkIiwiZGVkdXBlX2lkIjoibWNsaWZlY3ljbGU6bWNsaWZlY3ljbGVfMDAwMDlQQ2dPS2Y0S3p1TlR3NUI1NzpNQVNURVJDQVJEX0FVVEg6bWNhdXRobXNnXzAwMDA5UENnT0tFN3hCNjRkWFpSQUgiLCJvcmlnaW5hdG9yIjpmYWxzZSwiaW5jbHVkZV9pbl9zcGVuZGluZyI6dHJ1ZSwiY2FuX2JlX2V4Y2x1ZGVkX2Zyb21fYnJlYWtkb3duIjp0cnVlLCJjYW5fYmVfbWFkZV9zdWJzY3JpcHRpb24iOnRydWUsImNhbl9zcGxpdF90aGVfYmlsbCI6dHJ1ZX19
+    http_version: 
+  recorded_at: Wed, 22 Aug 2018 08:07:14 GMT
+recorded_with: VCR 4.0.0
