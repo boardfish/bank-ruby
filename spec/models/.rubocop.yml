@@ -5,3 +5,5 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
+Style/DateTime:
+  Enabled: false

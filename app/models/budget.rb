@@ -10,18 +10,24 @@ class Budget < ApplicationRecord
   validates_presence_of :amount
   validates_presence_of :month
 
+  def difference(transaction)
+    if transaction.class.name.demodulize == 'Relation'
+      amount - transaction.sum(:amount)
+    else
+      amount - transaction.amount
+    end
+  end
+
+  private
+
   def beginning_of_month
     self.month = month.beginning_of_month
   end
 
   def not_duplicate
-    raise 'cannot be duplicate' if Budget.where(
+    errors.add(:duplicate, 'cannot be duplicate') if Budget.where(
       category_id: category_id,
       month: month
     ).count.positive?
-  end
-
-  def difference(transaction)
-    amount - transaction.amount
   end
 end
