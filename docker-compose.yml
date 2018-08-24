@@ -19,3 +19,4 @@ services:
       - SEED_START_DATE
       - MONDO_TOKEN
       - ACCOUNT_ID
+      - STARTING_MONTH=7
