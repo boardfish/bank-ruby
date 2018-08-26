@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Categories</h1>
+
+<%= link_to  new_category_path, class: 'btn btn-success' do %>
+  <%= icon('fas', 'edit') %> New Category
+<% end %>
+  <div class="card-columns mt-3">
+    <% @categories.each do |category| %>
+      <div class="card">
+	<div class="card-body d-flex flex-row align-items-center">
+	  <div>
+	    <h3><%= category.name.humanize %></h3>
+	    <h5 class="text-muted"><%= Transaction.where(category_id: category.id).count %> transactions</h5>
+	  </div>
+	  <div class="btn-group ml-auto">
+  	    <%= link_to category, class: 'btn btn-success' do %>
+              <% icon('fas', 'eye') %>
+  	    <% end %>
+  	    <%= link_to edit_category_path(category), class: 'btn btn-warning' do %>
+              <% icon('fas', 'edit') %>
+  	    <% end %>
+  	    <%= link_to category, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do %>
+              <% icon('fas', 'trash') %>
+            <% end %>
+  	  </div>
+	</div>
+      </div>
+    <% end %>
+  </div>
