@@ -30,4 +30,11 @@ RSpec.describe Category, type: :model do
     blank_category.valid?
     expect(blank_category.errors[:name]).to include('can\'t be blank')
   end
+
+  it 'should clear categories of all related records' do
+    FactoryBot.build(:category).save
+    FactoryBot.build(:transaction, category_id: Category.first.id).save
+    Category.delete(Category.last.id)
+    expect(Transaction.last.category_id).to be_nil
+  end
 end
