@@ -1,4 +1,10 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <p id="notice" class="alert alert-primary">
+    <%= icon('fas', 'info-circle') %>
+    <%= notice %>
+  </p>
+<% end %>
+
 
 <h1>Categories</h1>
 
