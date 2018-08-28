@@ -7,4 +7,22 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import styler from 'stylefire';
+import { tween, easing } from 'popmotion';
+import pose from 'popmotion-pose'
 console.log('Hello World from Webpacker')
+const box = styler(document.querySelector("td"));
+tween({
+  from: {
+    x: -100,
+    opacity: 0
+  },
+  to: {
+    x: 0,
+    opacity: 1
+  },
+  ease: {
+    x: easing.easeOut,
+    opacity: easing.easeOut
+  }
+}).start(box.set);
