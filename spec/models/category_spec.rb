@@ -34,7 +34,7 @@ RSpec.describe Category, type: :model do
   it 'should clear categories of all related records' do
     FactoryBot.build(:category).save
     FactoryBot.build(:transaction, category_id: Category.first.id).save
-    Category.delete(Category.last.id)
+    Category.destroy(Category.last.id)
     expect(Transaction.last.category_id).to be_nil
   end
 end
