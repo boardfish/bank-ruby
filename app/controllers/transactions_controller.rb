@@ -106,7 +106,8 @@ class TransactionsController < ApplicationController
   # POST /transactions.json
   def monzo_webhook_add
     request_body = JSON.parse(request.body.read)
-    return unless request_body['type'] == 'transaction.created'
+    return unless request_body['type'] == 'transaction.created' &&
+                  request_body['decline_reason'].blank?
     source = request_body['data']
     merchant = source['merchant']
     internal_merchant = monzo_request_to_merchant(merchant)
