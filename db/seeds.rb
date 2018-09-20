@@ -34,18 +34,21 @@ def seed_transactions(from = SEED_START_DATE)
         address: merchant.address
       )
     end
-    Transaction.create(
-      amount: transaction.amount,
-      created: transaction.created,
-      currency: transaction.currency,
-      description: transaction.description,
-      merchant_id: internal_merchant&.id,
-      notes: transaction.notes,
-      is_load: transaction.is_load,
-      settled: transaction.settled,
-      category_id: transaction.category.nil? ? nil : Category.find_or_create_by(name: transaction.category).id,
-      monzo_id: transaction.id
-    )
+    if transaction.decline_reason.nil?
+      Transaction.create(
+        amount: transaction.amount,
+        created: transaction.created,
+        currency: transaction.currency,
+        description: transaction.description,
+        merchant_id: internal_merchant&.id,
+        notes: transaction.notes,
+        is_load: transaction.is_load,
+        settled: transaction.settled,
+        category_id: transaction.category.nil? ? nil : Category.find_or_create_by(name: transaction.category).id,
+        monzo_id: transaction.id,
+        decline_reason: transaction.decline_reason
+      )
+    end
   end
 end
 
