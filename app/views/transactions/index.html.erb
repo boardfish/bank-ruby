@@ -32,7 +32,7 @@
 
 <table class="table table-sm table-responsive">
   <thead>
-    
+
       <tr>
         <th class="text-center"><%= icon('fas', 'calendar-alt') %> Date</th>
         <th colspan="2" class="text-center"><%= icon('fas', 'shopping-bag') %> Merchant</th>
@@ -53,7 +53,17 @@
           <p class="badge badge-dark mb-0"><%= transaction.created.strftime('%H:%M') %></p>
         </td>
         <td class="align-middle"><img style="max-width: 50px;" src="<%= transaction&.merchant&.logo %>"></img></td>
-        <td class="align-middle"><%= link_to transaction.name, transaction, class: 'text-body' %></td>
+        <td class="align-middle">
+          <% if transaction.merchant %>
+            <%= link_to transaction.merchant.name, transaction, class: 'text-body' %>
+            <br>
+            <small class="text-muted"><%= transaction.notes %></small>
+          <% else %>
+            <%= link_to transaction.name, transaction, class: 'text-body' %>
+            <br>
+            <small class="text-muted"><%= transaction.notes %></small>
+          <% end %>
+        </td>
         <td class="align-middle text-right"><%= number_to_currency(transaction.amount, unit: '£') %></td>
         <td class="align-middle">
           <%= form_with(model: transaction) do |f| %>
