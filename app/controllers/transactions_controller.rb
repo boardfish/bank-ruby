@@ -134,8 +134,10 @@ class TransactionsController < ApplicationController
   def update
     respond_to do |format|
       if @transaction.update(transaction_params)
-        format.html redirect_to transactions_path,
-                                notice: 'Transaction was successfully updated.'
+        format.html do
+          redirect_to transactions_path,
+                      notice: 'Transaction was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @transaction }
         format.js
       else
